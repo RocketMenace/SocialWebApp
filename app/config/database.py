@@ -1,18 +1,72 @@
+from sqlalchemy.exc import ProgrammingError
+from contextlib import asynccontextmanager
+
 from app.config.config import config
 from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession
-from sqlalchemy.orm import declarative_base, sessionmaker, DeclarativeBase
-from databases import Database
+from sqlalchemy.orm import declarative_base, sessionmaker
+from sqlalchemy import text
 
 DATABASE_URL = f"postgresql+asyncpg://{config.POSTGRES_USER}:{config.POSTGRES_PASSWORD}@{config.POSTGRES_SERVER}:{config.POSTGRES_PORT}/{config.POSTGRES_DB}"
 
-engine = create_async_engine(DATABASE_URL, echo=True, future=True)
-SessionLocal = sessionmaker(bind=engine, class_=AsyncSession, expire_on_commit=False)
-Base = DeclarativeBase()
 
-async def create_tables():
-    async with engine.begin() as conn:
-        await conn.run_sync(Base.metadata.create_all())
+class Database:
+    def __init__(self):
+        self.engine = create_async_engine(DATABASE_URL, echo=True, future=True)
+        self.Base = declarative_base()
 
-database = Database(DATABASE_URL)
+    async def create_db(self, db_name: str):
+        try:
+            async with self.engine.connect() as conn:
+                result = await conn.execute(
+                    text(f"SELECT 1 FROM pg_database WHERE datname = '{db_name}'")
+                )
+                db_exists = result.scalar()
+                if not db_exists:
+                    await conn.execute(text(f'CREATE DATABASE "{db_name}"'))
+                    print(f"Database '{db_name}' created successfully")
+                else:
+                    print(f"Database '{db_name}' already exists")
+        except ProgrammingError as e:
+            print(f"Error creating database: {e}")
+        finally:
+            await self.engine.dispose()
+
+    async def ping_db(self):
+        try:
+            async with self.engine.connect() as conn:
+                await conn.execute(text("SELECT 1"))
+            print("Successfully connected to the Database")
+        except Exception as e:
+            print(f"Error connecting to the Database: {e}")
+
+    async def create_tables(self):
+        async with self.engine.begin() as conn:
+            await conn.run_sync(self.Base.metadata.create_all)
+        print("Database tables created successfully")
+
+    # @asynccontextmanager
+    async def get_session(self):
+        async_session = sessionmaker(self.engine, class_=AsyncSession)
+        session = None
+        try:
+            session = async_session()
+            async with session:
+                yield session
+        except Exception as e:
+            await session.rollback()
+            raise e
+        finally:
+            await session.close()
+
+    async def close_db(self):
+        await self.engine.dispose()
+        print("Database connection closed")
 
 
+database = Database()
+
+
+async def setup_db():
+    await database.create_db("social_app")
+    await database.ping_db()
+    await database.create_tables()

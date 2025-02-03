@@ -1,10 +1,7 @@
 from sqlalchemy.ext.asyncio import AsyncSession
-from app.config.database import engine, SessionLocal
+from app.config.database import database
 from typing import Annotated
+from fastapi import Depends
 
 
-def get_session():
-    with SessionLocal as session:
-        yield session
-
-SessionDep = Annotated[AsyncSession, get_session()]
+SessionDep = Annotated[AsyncSession, Depends(database.get_session)]
