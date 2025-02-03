@@ -1,0 +1,25 @@
+[tool.poetry]
+name = "socialwebapp"
+version = "0.1.0"
+description = ""
+authors = ["RocketMenace <grizzlygit777@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+ruff = "^0.9.4"
+isort = "^6.0.0"
+pydantic-settings = "^2.7.1"
+sqlalchemy = {extras = ["asyncio"], version = "^2.0.37"}
+asyncpg = "^0.30.0"
+databases = "^0.9.0"
+fastapi = "^0.115.8"
+uvicorn = "^0.34.0"
+uvloop = "^0.21.0"
+httptools = "^0.6.4"
+psycopg2-binary = "^2.9.10"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
