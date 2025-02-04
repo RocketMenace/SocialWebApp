@@ -1,6 +1,9 @@
-from fastapi import FastAPI
 from contextlib import asynccontextmanager
+
+from fastapi import FastAPI
+
 from app.config.database import database, setup_db
+from app.posts.router import posts_router
 from app.users.router import users_router
 
 
@@ -14,3 +17,4 @@ async def lifespan(application: FastAPI):
 app = FastAPI(lifespan=lifespan, title="Instagram clone API", root_path="/api")
 
 app.include_router(users_router, prefix="/users", tags=["users"])
+app.include_router(posts_router, prefix="/posts", tags=["posts"])

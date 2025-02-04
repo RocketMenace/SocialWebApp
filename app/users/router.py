@@ -1,7 +1,8 @@
 from fastapi import APIRouter, status
+
+from app.config.dependencies import SessionDep
 from app.users.schemas import User, UserIn
 from app.users.services import create_user
-from app.config.dependencies import SessionDep
 
 users_router = APIRouter()
 

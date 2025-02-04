@@ -1,8 +1,8 @@
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.auth.security import hash_password
-from app.users.schemas import UserIn
 from app.users.models import User
+from app.users.schemas import UserIn
 
 
 async def create_user(session: AsyncSession, request: UserIn):
