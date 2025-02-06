@@ -9,5 +9,7 @@ class User(database.Base):
     id: Mapped[int] = mapped_column(primary_key=True, index=True, autoincrement=True)
     username: Mapped[str]
     email: Mapped[str] = mapped_column(unique=True)
-    posts = relationship("Post", back_populates="user", cascade="all, delete", order_by="Post.created_at")
+    posts = relationship(
+        "Post", back_populates="user", cascade="all, delete", order_by="Post.created_at"
+    )
     password: Mapped[str]

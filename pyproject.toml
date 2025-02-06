@@ -21,6 +21,8 @@ passlib = "^1.7.4"
 pytest = "^8.3.4"
 httpx = "^0.28.1"
 trio = "^0.28.0"
+python-multipart = "^0.0.20"
+aiofiles = "^24.1.0"
 
 
 [build-system]

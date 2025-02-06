@@ -1,8 +1,9 @@
+from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.posts.exceptions import NotValidData
 from app.posts.models import Post
 from app.posts.schemas import PostIn
+from app.users.models import User
 
 
 async def create_post(session: AsyncSession, request: PostIn):
@@ -16,3 +17,7 @@ async def create_post(session: AsyncSession, request: PostIn):
     await session.commit()
     await session.refresh(new_post, ["user"])
     return new_post
+
+
+async def get_posts(session: AsyncSession):
+    return await session.scalars(select(Post, User).join(Post.user))
