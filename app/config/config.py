@@ -22,6 +22,9 @@ class DevConfig(GlobalConfig):
     POSTGRES_SERVER: str
     POSTGRES_PORT: str
     POSTGRES_DB: str
+    API_KEY: str
+    JWT_ALGORITHM: str = "HS256"
+    JWT_EXPIRED: int = 30  # minutes
 
 
 class TestConfig(GlobalConfig):

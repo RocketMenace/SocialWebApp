@@ -1,6 +1,7 @@
 import asyncio
 
 from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy import select
 
 from app.auth.security import hash_password
 from app.users.models import User
@@ -17,3 +18,7 @@ async def create_user(session: AsyncSession, request: UserIn):
     await session.commit()
     await session.refresh(new_user)
     return new_user
+
+
+async def get_user_by_email(session: AsyncSession, email: str):
+    return await session.scalar(select(User).where(User.email == email))

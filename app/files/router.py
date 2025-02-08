@@ -8,4 +8,3 @@ files_router = APIRouter()
 async def upload_image(image: UploadFile):
     await image_upload(image)
     return {"file": image.filename}
-

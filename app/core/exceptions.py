@@ -13,3 +13,15 @@ class DetailedException(HTTPException):
 
 class UnprocessableEntity(DetailedException):
     STATUS_CODE = status.HTTP_422_UNPROCESSABLE_ENTITY
+
+
+class NotAuthenticated(DetailedException):
+    STATUS_CODE = status.HTTP_401_UNAUTHORIZED
+    DETAIL = "User not authenticated"
+
+    def __init__(self):
+        super().__init__(headers={"WWW-Authenticate": "Bearer"})
+
+
+class BadRequest(DetailedException):
+    STATUS_CODE = status.HTTP_400_BAD_REQUEST
