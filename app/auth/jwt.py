@@ -1,13 +1,14 @@
+from datetime import datetime, timedelta, timezone
+
+import jwt
+from fastapi import Depends
 from fastapi.security import OAuth2PasswordBearer
+
+from app.auth.exceptions import InvalidToken
+from app.auth.schemas import JWTData
 from app.config.config import config
 from app.users.models import User
 from app.users.schemas import UserIn
-from datetime import timedelta, datetime, timezone
-import jwt
-from fastapi import Depends
-from app.auth.schemas import JWTData
-from app.auth.exceptions import InvalidToken
-
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/auth/login")
 SECRET_KEY = config.API_KEY

@@ -45,6 +45,11 @@ class Database:
             await conn.run_sync(self.Base.metadata.create_all)
         print("Database tables created successfully")
 
+    async def clear_tables(self):
+        async with self.engine.begin() as conn:
+            await conn.run_sync(self.Base.metadata.drop_all)
+        print("Database CLEARED!!!!")
+
     # @asynccontextmanager
     async def get_session(self):
         async_session = sessionmaker(self.engine, class_=AsyncSession)

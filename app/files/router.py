@@ -1,4 +1,5 @@
 from fastapi import APIRouter, UploadFile, status
+
 from app.files.services import image_upload
 
 files_router = APIRouter()

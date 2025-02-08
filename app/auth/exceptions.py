@@ -1,5 +1,5 @@
-from app.core.exceptions import NotAuthenticated, BadRequest
 from app.auth.constants import ErrorCode
+from app.core.exceptions import BadRequest, NotAuthenticated
 
 
 class EmailTaken(BadRequest):
