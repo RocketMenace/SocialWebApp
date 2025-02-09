@@ -3,8 +3,7 @@ from httpx import ASGITransport, AsyncClient
 
 from app.config.database import database, setup_db
 from app.main import app
-from tests.tests_users.services import (create_post_for_test,
-                                        create_user_for_tests)
+from tests.tests_users.services import create_post_for_test, create_user_for_tests
 
 
 @pytest.fixture()
