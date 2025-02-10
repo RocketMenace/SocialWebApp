@@ -25,3 +25,11 @@ class NotAuthenticated(DetailedException):
 
 class BadRequest(DetailedException):
     STATUS_CODE = status.HTTP_400_BAD_REQUEST
+
+
+class NotFound(DetailedException):
+    STATUS_CODE = status.HTTP_404_NOT_FOUND
+
+
+class Restricted(DetailedException):
+    STATUS_CODE = status.HTTP_403_FORBIDDEN

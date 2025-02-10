@@ -4,9 +4,9 @@ from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.auth.security import hash_password
+from app.users.exceptions import EmailTaken
 from app.users.models import User
 from app.users.schemas import UserIn
-from app.users.exceptions import EmailTaken
 
 
 async def get_user_by_email(session: AsyncSession, email: str):

@@ -2,6 +2,7 @@ from pydantic import BaseModel, Field
 
 
 class JWTData(BaseModel):
+    user_id: int
     email: str = Field(alias="sub")
 
 

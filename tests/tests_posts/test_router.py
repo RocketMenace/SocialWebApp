@@ -35,3 +35,9 @@ async def test_get_all_posts(get_client, create_user, create_post):
     response = await get_client.get("/posts")
     assert response.status_code == 200
     assert response.json() == [create_post]
+
+
+@pytest.mark.anyio
+async def test_delete_post(get_client, create_user, create_post):
+    response = await get_client.delete(f"/posts/delete/{create_post['id']}")
+    assert response.status_code == 204

@@ -8,3 +8,7 @@ class InvalidCredentials(BadRequest):
 
 class InvalidToken(NotAuthenticated):
     DETAIL = ErrorCode.INVALID_TOKEN
+
+
+class AuthRequired(NotAuthenticated):
+    DETAIL = ErrorCode.AUTHENTICATION_REQUIRED

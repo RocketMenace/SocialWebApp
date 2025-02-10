@@ -3,6 +3,7 @@ from typing import Literal
 
 from pydantic import BaseModel, ConfigDict
 
+from app.comments.schemas import Comment
 from app.users.schemas import User
 
 
@@ -22,3 +23,4 @@ class Post(BasePost):
     id: int
     created_at: datetime
     user: User
+    comments: list[Comment]

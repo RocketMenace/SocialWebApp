@@ -12,4 +12,5 @@ class User(database.Base):
     posts = relationship(
         "Post", back_populates="user", cascade="all, delete", order_by="Post.created_at"
     )
+    comments = relationship("Comment", back_populates="user")
     password: Mapped[str]

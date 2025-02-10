@@ -1,19 +1,18 @@
 from datetime import datetime
 
 from sqlalchemy import ForeignKey, func
-from sqlalchemy.ext.asyncio import AsyncAttrs
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.config.database import database
 
 
-class Post(database.Base):
-    __tablename__ = "posts"
+class Comment(database.Base):
+    __tablename__ = "comments"
     id: Mapped[int] = mapped_column(primary_key=True, index=True)
+    username: Mapped[str]
+    text: Mapped[str]
     user_id: Mapped[int] = mapped_column(ForeignKey("users.id", ondelete="CASCADE"))
-    user = relationship("User", back_populates="posts", lazy="selectin")
-    image_url: Mapped[str]
-    image_url_type: Mapped[str]
-    comments = relationship("Comment", back_populates="post", lazy="selectin")
-    caption: Mapped[str]
+    user = relationship("User", back_populates="comments")
+    post_id: Mapped[int] = mapped_column(ForeignKey("posts.id", ondelete="CASCADE"))
+    post = relationship("Post", back_populates="comments")
     created_at: Mapped[datetime] = mapped_column(default=func.now())
