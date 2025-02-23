@@ -28,7 +28,7 @@ app.include_router(auth_router, prefix="/auth", tags=["auth"])
 app.include_router(comments_router, prefix="/comments", tags=["posts", "comments"])
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
-origins = ["http://localhost:3000"]
+origins = ["http://localhost:3000", "http://127.0.0.1:3000"]
 
 app.add_middleware(
     CORSMiddleware,

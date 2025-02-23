@@ -13,7 +13,7 @@ comments_router = APIRouter()
 
 
 @comments_router.get(
-    path="/{post_id}", status_code=status.HTTP_200_OK, response_model=Post
+    path="/{post_id}", status_code=status.HTTP_200_OK, response_model=list[Comment]
 )
 async def comments(session: SessionDep, post_id: int):
     return await get_all_comments(session, post_id)

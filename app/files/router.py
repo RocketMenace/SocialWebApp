@@ -12,5 +12,5 @@ files_router = APIRouter()
 
 @files_router.post(path="/image", status_code=status.HTTP_201_CREATED)
 async def upload_image(image: UploadFile, token: Annotated[JWTData, Depends(check_user_jwt)]):
-    await image_upload(image, token)
-    return {"file": image.filename}
+    file_path = await image_upload(image, token)
+    return {"file": file_path}

@@ -15,3 +15,4 @@ async def image_upload(file: UploadFile, token: JWTData):
     file_path = os.path.join("static/images", unique_filename)
     async with aiofiles.open(file_path, mode="w+b") as buffer:
         await buffer.write(await file.read())
+    return file_path
