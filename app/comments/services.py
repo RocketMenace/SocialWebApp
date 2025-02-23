@@ -2,12 +2,15 @@ from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.auth.schemas import JWTData
+from app.auth.exceptions import AuthRequired
 from app.comments.models import Comment
 from app.comments.schemas import CommentIn
 from app.posts.models import Post
 
 
 async def create_comment(session: AsyncSession, request: CommentIn, token: JWTData):
+    if not token:
+        raise AuthRequired()
     new_comment = Comment(
         text=request.text,
         username=request.username,

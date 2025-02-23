@@ -5,6 +5,7 @@ from app.auth.schemas import JWTData
 from app.posts.exceptions import DeletionRestricted, PostNotFound
 from app.posts.models import Post
 from app.posts.schemas import PostIn
+from app.auth.exceptions import AuthRequired
 
 
 async def delete_post(session: AsyncSession, post_id: int, token: JWTData):
@@ -17,7 +18,9 @@ async def delete_post(session: AsyncSession, post_id: int, token: JWTData):
     await session.commit()
 
 
-async def create_post(session: AsyncSession, request: PostIn):
+async def create_post(session: AsyncSession, request: PostIn, token: JWTData):
+    if not token:
+        raise AuthRequired()
     new_post = Post(
         image_url=request.image_url,
         image_url_type=request.image_url_type,

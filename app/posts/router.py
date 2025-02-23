@@ -14,8 +14,8 @@ posts_router = APIRouter()
 @posts_router.post(
     path="/create", status_code=status.HTTP_201_CREATED, response_model=Post
 )
-async def post_create(session: SessionDep, request: PostIn):
-    return await create_post(session, request)
+async def post_create(session: SessionDep, request: PostIn, token: Annotated[JWTData | None, Depends(check_user_jwt)]):
+    return await create_post(session, request, token)
 
 
 @posts_router.get(path="", status_code=status.HTTP_200_OK, response_model=list[Post])

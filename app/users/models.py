@@ -1,7 +1,6 @@
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.config.database import database
-from app.posts.models import Post
 
 
 class User(database.Base):

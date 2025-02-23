@@ -1,8 +1,8 @@
 from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
-from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
 
 from app.auth.router import auth_router
 from app.comments.router import comments_router
@@ -28,14 +28,12 @@ app.include_router(auth_router, prefix="/auth", tags=["auth"])
 app.include_router(comments_router, prefix="/comments", tags=["posts", "comments"])
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
-origins = [
-    "http://localhost:3000"
-]
+origins = ["http://localhost:3000"]
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins = origins,
-    allow_credentials = True,
-    allow_methods = ["*"],
-    allow_headers = ["*"]
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
 )

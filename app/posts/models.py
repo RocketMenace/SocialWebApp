@@ -1,7 +1,6 @@
 from datetime import datetime
 
 from sqlalchemy import ForeignKey, func
-from sqlalchemy.ext.asyncio import AsyncAttrs
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.config.database import database
