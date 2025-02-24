@@ -171,4 +171,4 @@ cython_debug/
 .pypirc
 
 # Uploaded files
-.static/
+static/
