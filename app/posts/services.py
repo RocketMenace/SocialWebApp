@@ -1,4 +1,4 @@
-from sqlalchemy import select
+from sqlalchemy import select, desc
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.auth.schemas import JWTData
@@ -34,4 +34,4 @@ async def create_post(session: AsyncSession, request: PostIn, token: JWTData):
 
 
 async def get_posts(session: AsyncSession):
-    return await session.scalars(select(Post))
+    return await session.scalars(select(Post).order_by(desc(Post.created_at)))
